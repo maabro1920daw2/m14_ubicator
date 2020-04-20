@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import {HomeView} from './app/views/HomeView';
+import {MarkerView} from './app/views/MarkerView';
 
 export default function App() {
   return (

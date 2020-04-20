@@ -27,10 +27,13 @@ export class HomeView extends React.Component {
             //Inserts
             tx.executeSql("insert into locals (latitude, longitude, name) values (41.449847, 2.247616, ?)", ['Frankfurt Badalona']);
             tx.executeSql("insert into locals (latitude, longitude, name) values (41.449331, 2.24709, ?)", ['4 Pedres']);
+            tx.executeSql("insert into locals (latitude, longitude, name) values (41.445976, 2.248929, ?)", ['Renfe Badalona']);
+            tx.executeSql("insert into locals (latitude, longitude, name) values (41.453516, 2.251103, ?)", ['Restaurant Il Metro']);
+            tx.executeSql("insert into locals (latitude, longitude, name) values (41.449279, 2.244902, ?)", ['Badalona Pompeu Fabra']);
             //Select de los datos
             tx.executeSql("select * from locals", [], (tx,results) => {
                 let temp = []; //Array temporal para guardar las filas  
-                for(let i=0; i < results.rows.length; i++){
+                for(let i=0; i < results.rows.length; i++){ 
                     temp.push(results.rows.item(i));
                 }
                 console.log(temp);
