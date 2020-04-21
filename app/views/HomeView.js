@@ -34,7 +34,7 @@ export class HomeView extends React.Component {
             tx.executeSql("select * from locals", [], (tx,results) => {
                 let temp = []; //Array temporal para guardar las filas  
                 for(let i=0; i < results.rows.length; i++){ 
-                    temp.push(results.rows.item(i));
+                    temp.push(results.rows.item(i));//Añade las filas al temporal
                 }
                 console.log(temp);
                 this.setState({ markers: temp, }); //Pone el state markers con la info de la BD
@@ -51,7 +51,10 @@ export class HomeView extends React.Component {
                     customMapStyle={mapStyle}
                 >
                     {this.state.markers.map(marker => ( //Muestra los puntos del mapa
-                        <Marker key={marker.id} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} />
+                        <Marker key={marker.id} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
+                        onPress={() => this.props.navigation.navigate('Marker', {
+                            id: marker.id, //Pasa la id de la marca
+                        })} />
                     ))}
                 </MapView>
             </View>            
