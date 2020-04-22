@@ -11,32 +11,39 @@ export class MarkerView extends React.Component {
         super(props);
         this.state = {
             id: JSON.stringify(this.props.route.params.id), //La id del Marker
-            imgs: [],
+            imgs: [], // Imagenes de los puntos
             name: "", // Nombre del punto
             imgCab: "", // Imagen de cabecera
             dir: "", // Direccion del punto 
-            good: false, // Ignorar
         };
 
     }
     componentDidMount() {
-        if(!this.state.good){
-            db.transaction(tx => {
-                //Select de los datos
-                tx.executeSql("select name, imgCab, dirr from locals where id=?", [this.state.id], (tx,results) => {
-                    let tempName = "";
-                    let tempImg = "";
-                    let tempDir = "";
-                    for(let i=0; i < results.rows.length; i++){
-                        tempName = results.rows.item(i).name;
-                        tempImg = results.rows.item(i).imgCab;
-                        tempDir = results.rows.item(i).dirr;
-                    }
-                    this.setState({ name: tempName, imgCab: tempImg, dir: tempDir }); //Pone el state de los datos con la info de la BD
-                });
+        db.transaction(tx => {
+            //Select de los datos
+            tx.executeSql("select name, imgCab, dirr from locals where id=?", [this.state.id], (tx,results) => {
+                let tempName = "";
+                let tempImg = "";
+                let tempDir = "";
+                for(let i=0; i < results.rows.length; i++){
+                    tempName = results.rows.item(i).name;
+                    tempImg = results.rows.item(i).imgCab;
+                    tempDir = results.rows.item(i).dirr;
+                }
+                this.setState({ name: tempName, imgCab: tempImg, dir: tempDir }); //Pone el state de los datos con la info de la BD
             });
-        }
-        this.setState({good: true});
+        });
+        db.transaction(tx => {
+            //Select de los datos
+            tx.executeSql("select uri from fotos where idLocals=?", [this.state.id], (tx,results) => {
+                let temp = []; //Array temporal para guardar las filas  
+                for(let i=0; i < results.rows.length; i++){ 
+                    temp.push(results.rows.item(i));//Añade las filas al temporal
+                }
+                console.log(temp);
+                this.setState({ imgs: temp, }); //Pone el state markers con la info de la BD
+            });
+        });
     }
     // Funcion para mostrar la imagen de cabecera
     seleccionImagen(im) {
@@ -46,23 +53,16 @@ export class MarkerView extends React.Component {
             'img003': require('../../assets/img/img003.png'),
             'img004': require('../../assets/img/img004.png'),
             'img005': require('../../assets/img/img005.png'),
+            'p001': require('../../assets/img/p001.png'),
+            'p002': require('../../assets/img/p002.png'),
+            'p003': require('../../assets/img/p003.png'),
+            'p004': require('../../assets/img/p004.png'),
+            'p005': require('../../assets/img/p005.png'),
+            'p006': require('../../assets/img/p006.png'),
         };
         return cabeceras[im];
     }
 
-    /*componentDidUpdate() {
-        db.transaction(tx => {
-            //Select de los datos
-            tx.executeSql("select * from fotos where idLocals=?", [this.state.id], (tx,results) => {
-                let temp = []; //Array temporal para guardar las filas  
-                for(let i=0; i < results.rows.length; i++){ 
-                    temp.push(results.rows.item(i));//Añade las filas al temporal
-                }
-                console.log(temp);
-                this.setState({ imgs: temp, }); //Pone el state markers con la info de la BD
-            });<Text style={styles.image}><Image source={} /></Text><Text >
-        });       
-    }*/
     render() {        
         return(
             <View style={styles.container}>
@@ -76,9 +76,11 @@ export class MarkerView extends React.Component {
                 />
                 <View style={styles.fotoView}>
                     <Text style={styles.fotoTitle}>Fotos del punto:</Text>
-                {this.state.imgs.map(img => ( //Resultado base de datos fotos
-                    <Text key={img.id}>{img.uri} || {img.idLocals}</Text>
-                ))}
+                    <View style={styles.imgView}>
+                    {this.state.imgs.map(img => ( //Resultado base de datos fotos
+                        <Image key={img.uri} style={styles.fotoImg} source={this.seleccionImagen(img.uri)} />
+                    ))}
+                    </View>
                 </View>
 
             </View>
@@ -89,7 +91,7 @@ export class MarkerView extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red',
+        backgroundColor: '#ebedf0',
         width: '100%',        
     },
     icons: {
@@ -119,5 +121,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginHorizontal: 15,
         marginTop: 10,
+    },
+    imgView: {
+        flexDirection: "row",
+        marginHorizontal: 15,
+    },
+    fotoImg: {
+        width: 120,
+        height: 120,
+        marginLeft: 7,
+        marginTop: 7,
+        borderColor: '#ebedf0',
+        borderWidth: 2,
     }
 });

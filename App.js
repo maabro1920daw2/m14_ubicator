@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer style={styles.container}>
+    <NavigationContainer>
       <Stack.Navigator initialRouteName="Ubicator">
         <Stack.Screen name="Ubicator" component={HomeView} />
         <Stack.Screen name="Info" component={MarkerView} />
@@ -20,12 +20,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#333',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -87,11 +87,12 @@ export class HomeView extends React.Component {
             tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.453516, 2.251103, ?, ?, ?)", ['Restaurant Il Metro','img003', 'Carrer de Sant Bru, 29, 08911 Badalona, Barcelona']);
             tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.449279, 2.244902, ?, ?, ?)", ['Badalona Pompeu Fabra','img002', 'Plaça Pompeu Fabra, 08912 Badalona, Barcelona']);
 
-            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img001.jpg', 2]);
-            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img002.jpg', 5]);
-            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img003.jpg', 4]);
-            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img004.jpg', 3]);
-            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img004.jpg', 1]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p001', 3]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p002', 3]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p003', 2]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p004', 4]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p005', 2]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['p006', 5]);
             //Select de los datos
             tx.executeSql("select * from locals", [], (tx,results) => {
                 let temp = []; //Array temporal para guardar las filas  
