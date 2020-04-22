@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import * as SQLite from 'expo-sqlite'; //Importar SQLite
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; //Importar iconos FontAwesome
 import { faCamera } from '@fortawesome/free-solid-svg-icons'; //Icono camara
@@ -60,13 +60,13 @@ export class MarkerView extends React.Component {
                 }
                 console.log(temp);
                 this.setState({ imgs: temp, }); //Pone el state markers con la info de la BD
-            });<Text style={styles.image}><Image source={} /></Text>
+            });<Text style={styles.image}><Image source={} /></Text><Text >
         });       
     }*/
     render() {        
         return(
             <View style={styles.container}>
-                <Text style={styles.image}><Image source={this.seleccionImagen(this.state.imgCab)} /></Text>
+                <Image source={this.seleccionImagen(this.state.imgCab)} />
                 <Text style={styles.title}>{this.state.name}</Text> 
                 <Text style={styles.dir}>{this.state.dir}</Text>                         
                 <FontAwesomeIcon style={styles.icons} icon={faCamera} size={40} 
@@ -74,9 +74,13 @@ export class MarkerView extends React.Component {
                     id: this.state.id, //Pasa la id de la marca
                 })}
                 />
+                <View style={styles.fotoView}>
+                    <Text style={styles.fotoTitle}>Fotos del punto:</Text>
                 {this.state.imgs.map(img => ( //Resultado base de datos fotos
                     <Text key={img.id}>{img.uri} || {img.idLocals}</Text>
                 ))}
+                </View>
+
             </View>
         );
     }
@@ -85,35 +89,35 @@ export class MarkerView extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f9fa',
-    },
-    sizes: {
-        width: Dimensions.get('window').width,
-        height: '100%',
+        backgroundColor: 'red',
+        width: '100%',        
     },
     icons: {
         color: '#333333',
-        bottom: 380,
         marginHorizontal: 370,
-    },
-    image: {
-        flex: 2,
-        position: 'relative',
-        top: -121,
-        width: '100%',
+        marginTop: 5,
+        marginBottom: 15,
     },
     title: {
         fontSize: 40,
         fontWeight: 'bold',
         position: 'relative',
-        bottom: 370,
         marginHorizontal: 15,
-        lineHeight: 100,
+        lineHeight: 70,
         includeFontPadding: true,
     },
     dir: {
         fontSize: 18,
         marginHorizontal: 20,
-        bottom: 395,
+    },
+    fotoView: {
+        flex: 2,
+        backgroundColor: '#f8f9fa',
+    },
+    fotoTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginHorizontal: 15,
+        marginTop: 10,
     }
 });
