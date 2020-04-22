@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     icons: {
         color: '#333333',
         bottom: 380,
-        left: 370,
+        marginHorizontal: 370,
     },
     image: {
         flex: 2,
@@ -107,13 +107,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         position: 'relative',
         bottom: 370,
-        left: 15,
+        marginHorizontal: 15,
         lineHeight: 100,
         includeFontPadding: true,
     },
     dir: {
-        fontSize: 20,
-        left: 19,
+        fontSize: 18,
+        marginHorizontal: 20,
         bottom: 395,
     }
 });

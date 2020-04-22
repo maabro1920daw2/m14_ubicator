@@ -47,7 +47,7 @@ export class CameraView extends React.Component {
                 <View style={{ flex: 1 }}>
                     <Camera style={{ flex: 1 }} type={this.state.cameraType}
                     ref={ref => {this.camera = ref;}}>
-                        <View style={{flex:1, flexDirection:"row",justifyContent:"space-between",margin:20}}>
+                        <View style={{flex:1, flexDirection:"row",justifyContent:"center",margin:20}}>
                             <TouchableOpacity
                                 style={{
                                 alignSelf: 'flex-end',

@@ -1,10 +1,64 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Text, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps'; //Importar mapas
+import MapView, { Marker, Polyline } from 'react-native-maps'; //Importar mapas
 import mapStyle from '../../assets/style_map.json'; //Estilos para los mapas, creados por google
 import * as SQLite from 'expo-sqlite'; //Importar SQLite
 
 const db = SQLite.openDatabase("db.db"); //Llamada a la base de datos
+
+const prruta = [
+    {
+        latitude: 41.449279,
+        longitude: 2.244902, 
+    },
+    {
+        latitude: 41.449650,
+        longitude: 2.245431,
+    },
+    {
+        latitude: 41.449289,
+        longitude: 2.245662,
+    },
+    {
+        latitude: 41.449847,
+        longitude: 2.247616,
+    },
+    {
+        latitude: 41.450929,
+        longitude: 2.248477,
+    },
+    {
+        latitude: 41.452758,
+        longitude: 2.250322,
+    },
+    {
+        latitude: 41.453516,
+        longitude: 2.251103,
+    },
+]
+
+const seruta = [
+    {
+        latitude: 41.449331,
+        longitude: 2.24709, 
+    },
+    {
+        latitude: 41.447293,
+        longitude: 2.248883,
+    },
+    {
+        latitude: 41.446673,
+        longitude: 2.248313,
+    },
+    {
+        latitude: 41.446154,
+        longitude: 2.248957,
+    },
+    {
+        latitude: 41.445976,
+        longitude: 2.248929,
+    },
+]
 
 export class HomeView extends React.Component {
     constructor(props){
@@ -58,12 +112,23 @@ export class HomeView extends React.Component {
                     style={styles.sizes}
                     customMapStyle={mapStyle}
                 >
-                    {this.state.markers.map(marker => ( //Muestra los puntos del mapa
-                        <Marker key={marker.id} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                        onPress={() => this.props.navigation.navigate('Info', {
+                {this.state.markers.map(marker => ( //Muestra los puntos del mapa
+                    <Marker key={marker.id} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
+                    pinColor={'tomato'}
+                    onPress={() => this.props.navigation.navigate('Info', {
                             id: marker.id, //Pasa la id de la marca
-                        })} />
-                    ))}
+                    })} />
+                ))}
+                    <Polyline
+                    coordinates={prruta}
+                    strokeWidth={3}
+                    strokeColor={'#a5defe'}
+                    />
+                    <Polyline
+                    coordinates={seruta}
+                    strokeWidth={3}
+                    strokeColor={'#33b5ff'}
+                    />
                 </MapView>
             </View>            
         );
