@@ -5,7 +5,7 @@ import mapStyle from '../../assets/style_map.json'; //Estilos para los mapas, cr
 import * as SQLite from 'expo-sqlite'; //Importar SQLite
 
 const db = SQLite.openDatabase("db.db"); //Llamada a la base de datos
-
+// Coordenadas para la polyline primera
 const prruta = [
     {
         latitude: 41.449279,
@@ -36,7 +36,7 @@ const prruta = [
         longitude: 2.251103,
     },
 ]
-
+// Coordenadas para la polyline segunda
 const seruta = [
     {
         latitude: 41.449331,

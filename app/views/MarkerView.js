@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Dimensions, Text, View, Image } from 'react-native';
 import * as SQLite from 'expo-sqlite'; //Importar SQLite
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; //Importar iconos FontAwesome
 import { faCamera } from '@fortawesome/free-solid-svg-icons'; //Icono camara
@@ -12,10 +12,10 @@ export class MarkerView extends React.Component {
         this.state = {
             id: JSON.stringify(this.props.route.params.id), //La id del Marker
             imgs: [],
-            name: "",
-            imgCab: "",
-            dir: "",
-            good: false,
+            name: "", // Nombre del punto
+            imgCab: "", // Imagen de cabecera
+            dir: "", // Direccion del punto 
+            good: false, // Ignorar
         };
 
     }
@@ -32,13 +32,13 @@ export class MarkerView extends React.Component {
                         tempImg = results.rows.item(i).imgCab;
                         tempDir = results.rows.item(i).dirr;
                     }
-                    this.setState({ name: tempName, imgCab: tempImg, dir: tempDir }); //Pone el state markers con la info de la BD
+                    this.setState({ name: tempName, imgCab: tempImg, dir: tempDir }); //Pone el state de los datos con la info de la BD
                 });
             });
         }
         this.setState({good: true});
     }
-
+    // Funcion para mostrar la imagen de cabecera
     seleccionImagen(im) {
         const cabeceras = {
             'img001': require('../../assets/img/img001.png'),
@@ -74,7 +74,7 @@ export class MarkerView extends React.Component {
                     id: this.state.id, //Pasa la id de la marca
                 })}
                 />
-                {this.state.imgs.map(img => ( //Muestra los puntos del mapa
+                {this.state.imgs.map(img => ( //Resultado base de datos fotos
                     <Text key={img.id}>{img.uri} || {img.idLocals}</Text>
                 ))}
             </View>

@@ -13,18 +13,18 @@ export class CameraView extends React.Component {
         super(props);
         this.state = {
             path: null,
-            id: JSON.stringify(this.props.route.params.id), //La id del Marker
-            hasPermission: null,
-            type: Camera.Constants.Type.back,
+            id: JSON.stringify(this.props.route.params.id), // La id del Marker
+            hasPermission: null, // Permisos telefono
+            type: Camera.Constants.Type.back, // Camara del telefono
         };
        
     }
-
+    // Comprueba los permisos de la camara
     async componentDidMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasPermission: status === 'granted' });
     }
-
+    // Funcion para hacer fotos
     takePicture = async () => {
         if (this.camera) {
           let photo = await this.camera.takePictureAsync();
@@ -44,16 +44,12 @@ export class CameraView extends React.Component {
             return <Text>No access to camera</Text>;
         } else {
             return (
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}> 
                     <Camera style={{ flex: 1 }} type={this.state.cameraType}
                     ref={ref => {this.camera = ref;}}>
-                        <View style={{flex:1, flexDirection:"row",justifyContent:"center",margin:20}}>
+                        <View style={styles.icons_container}>
                             <TouchableOpacity
-                                style={{
-                                alignSelf: 'flex-end',
-                                alignItems: 'center',
-                                backgroundColor: 'transparent',
-                                }}
+                                style={styles.icon}
                                 onPress={()=>this.takePicture()}>
                                 <FontAwesomeIcon
                                     icon={faCamera}
@@ -70,8 +66,15 @@ export class CameraView extends React.Component {
 }
 //Estilos CameraView
 const styles = StyleSheet.create({
-    sizes: {
-        width: Dimensions.get('window').width,
-        height: '100%',
+    icon: {
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
     },
+    icons_container: {
+        flex:1, 
+        flexDirection:"row",
+        justifyContent:"center",
+        margin:20,
+    }
 });
