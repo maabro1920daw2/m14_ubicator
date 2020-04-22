@@ -20,16 +20,24 @@ export class HomeView extends React.Component {
         };
 
         db.transaction(tx => {
-            tx.executeSql("drop table if exists locals;"); //Borra la tabla
-            tx.executeSql( //Crea la tabla
-                "create table if not exists locals (id integer primary key not null, latitude real, longitude real, name text);"
+            tx.executeSql("drop table if exists locals;"); //Borra la tabla locals
+            tx.executeSql("drop table if exists fotos;"); //Borra la tabla fotos
+            tx.executeSql( //Crea la tabla locals
+                "create table if not exists locals (id integer primary key not null, latitude real, longitude real, name text, imgCab text, dirr text);"
             );
+            tx.executeSql("create table if not exists fotos (id integer primary key not null, uri text, idLocals integer);");
             //Inserts
-            tx.executeSql("insert into locals (latitude, longitude, name) values (41.449847, 2.247616, ?)", ['Frankfurt Badalona']);
-            tx.executeSql("insert into locals (latitude, longitude, name) values (41.449331, 2.24709, ?)", ['4 Pedres']);
-            tx.executeSql("insert into locals (latitude, longitude, name) values (41.445976, 2.248929, ?)", ['Renfe Badalona']);
-            tx.executeSql("insert into locals (latitude, longitude, name) values (41.453516, 2.251103, ?)", ['Restaurant Il Metro']);
-            tx.executeSql("insert into locals (latitude, longitude, name) values (41.449279, 2.244902, ?)", ['Badalona Pompeu Fabra']);
+            tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.449847, 2.247616, ?, ?, ?)", ['Frankfurt Badalona','img005', 'Carrer de Mar, 1, 08911 Badalona, Barcelona']);
+            tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.449331, 2.24709, ?, ?, ?)", ['4 Pedres','img001', 'Carrer de Lleó, 33, 08911 Badalona, Barcelona']);
+            tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.445976, 2.248929, ?, ?, ?)", ['Renfe Badalona','img004', 'Plaça de Roca i Pi, 08912 Badalona, Barcelona']);
+            tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.453516, 2.251103, ?, ?, ?)", ['Restaurant Il Metro','img003', 'Carrer de Sant Bru, 29, 08911 Badalona, Barcelona']);
+            tx.executeSql("insert into locals (latitude, longitude, name, imgCab, dirr) values (41.449279, 2.244902, ?, ?, ?)", ['Badalona Pompeu Fabra','img002', 'Plaça Pompeu Fabra, 08912 Badalona, Barcelona']);
+
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img001.jpg', 2]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img002.jpg', 5]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img003.jpg', 4]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img004.jpg', 3]);
+            tx.executeSql("insert into fotos (uri, idLocals) values (?, ?)", ['../../assets/img/img004.jpg', 1]);
             //Select de los datos
             tx.executeSql("select * from locals", [], (tx,results) => {
                 let temp = []; //Array temporal para guardar las filas  
@@ -52,7 +60,7 @@ export class HomeView extends React.Component {
                 >
                     {this.state.markers.map(marker => ( //Muestra los puntos del mapa
                         <Marker key={marker.id} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                        onPress={() => this.props.navigation.navigate('Marker', {
+                        onPress={() => this.props.navigation.navigate('Info', {
                             id: marker.id, //Pasa la id de la marca
                         })} />
                     ))}

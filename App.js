@@ -14,7 +14,7 @@ export default function App() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator initialRouteName="Ubicator">
         <Stack.Screen name="Ubicator" component={HomeView} />
-        <Stack.Screen name="Marker" component={MarkerView} />
+        <Stack.Screen name="Info" component={MarkerView} />
         <Stack.Screen name="Camera" component={CameraView} />
       </Stack.Navigator>
     </NavigationContainer>
